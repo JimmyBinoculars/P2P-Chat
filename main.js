@@ -1,7 +1,7 @@
 const net = require('node:net');
 const fs = require('node:fs');
 const path = require('node:path');
-var AES = require("crypto-js/aes");
+var CryptoJS = require("crypto-js");
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
@@ -42,6 +42,9 @@ function clientConnect(ip, port){
 }
 
 function start(){
+    //encryption check
+    console.log(CryptoJS.AES.encrypt("Hello", "Monday left me broken").toString());
+    
     //Start server
     const server = net.createServer((socket) => {
         console.log('Client connected.');
@@ -61,13 +64,11 @@ function start(){
         });
       });
 
-    server.listen(port, () => {
-        console.log(`Server listening on port ${port}`);
-    });
+    server.listen(port);
 
     //Get client info
-
-    let isData = true;
+    console.log("Finished starting server");
+    let isData;
     try {
         let {identifierBase} = require('./config.json');
     } catch {
