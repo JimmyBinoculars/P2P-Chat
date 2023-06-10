@@ -1,6 +1,7 @@
 const net = require('node:net');
 const fs = require('node:fs');
 const path = require('node:path');
+var AES = require("crypto-js/aes");
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
@@ -83,7 +84,7 @@ function start(){
             tempData['name'] = name;
           });
         console.log("Generating your identifier");
-        
+
     }
 }
 
