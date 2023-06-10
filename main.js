@@ -1,6 +1,23 @@
 const net = require('node:net');
+const fs = require('node:fs');
+const path = require('node:path');
+const readline = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
 
 const port = 3000;
+const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+function generateRandomString() {
+    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 0; i < 32; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      result += characters[randomIndex];
+    }
+    return result;
+}
 
 //Connect to other client
 function clientConnect(ip, port){
@@ -46,6 +63,28 @@ function start(){
     server.listen(port, () => {
         console.log(`Server listening on port ${port}`);
     });
+
+    //Get client info
+
+    let isData = true;
+    try {
+        let {identifierBase} = require('./config.json');
+    } catch {
+        isData = false;
+    }
+
+    let tempData = {};
+    if(isData){
+        let {identifierBase, name} = require('./config.json');
+    }else {
+        readline.question('Whats your name? (optional)', name => {
+            console.log(`Hey there ${name}!`);
+            readline.close();
+            tempData['name'] = name;
+          });
+        console.log("Generating your identifier");
+        
+    }
 }
 
 start();
