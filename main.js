@@ -79,7 +79,7 @@ function start(){
       client.on('data', (data) => {
         const receivedData = data.toString().trim();
         currentKey = receivedData;
-        console.log(`Received data: ${receivedData}`);
+        //console.log(`Received data: ${receivedData}`);
       });
     
       client.on('close', () => {
@@ -88,7 +88,6 @@ function start(){
     });
 
     //Get client info
-    console.log("Finished starting server");
     let isData;
     try {
         let {identifierBase} = require('./config.json');
@@ -98,15 +97,18 @@ function start(){
 
     let tempData = {};
     if(isData){
-        let {identifierBase, name} = require('./config.json');
+        let {identifierBase, key} = require('./config.json');
     }else {
-        readline.question('Whats your name? (optional)', name => {
-            console.log(`Hey there ${name}!`);
-            readline.close();
-            console.log("Generating your identifier");
-            tempData['name'] = name;
-        });
-        //tempData['identifier'] = CryptoJS.AES.encrypt()
+      tempData['identifierBase'] = generateRandomString();
+      tempData['key'] = generateRandomString();
+      const jsonString = JSON.stringify(tempData);
+      fs.writeFile('./data.json', jsonString, err => {
+        if (err) {
+          console.log('Error writing file', err)
+        } else {
+            console.log('Successfully wrote file')
+        }
+      })
     }
 }
 
