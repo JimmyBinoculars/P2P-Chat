@@ -32,17 +32,22 @@ const server = net.createServer((socket) => {
       console.log(`Received message: ${message}`);
     });
   
-    // Handle client disconnection
     socket.on('end', () => {
-      console.log('Client disconnected.');
-  
-      // Remove the socket from the list of connected sockets
-      const index = clients.indexOf(socket);
-      if (index !== -1) {
-        clients.splice(index, 1);
-      }
+        console.log('Client disconnected.');
+    
+        // Remove the socket from the list of connected sockets
+        const index = clients.indexOf(socket);
+        if (index !== -1) {
+          clients.splice(index, 1);
+        }
     });
-  });
+    
+      // Handle socket errors
+      socket.on('error', (error) => {
+        console.error('Socket error:', error);
+        socket.destroy(); // Close the socket to prevent further errors
+    });
+});
 server.listen(port);
 
 async function mainLoop(){

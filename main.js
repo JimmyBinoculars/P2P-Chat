@@ -2,10 +2,12 @@ const net = require('node:net');
 const fs = require('node:fs');
 const path = require('node:path');
 var CryptoJS = require("crypto-js");
+const client = new net.Socket();
 const readline = require('readline').createInterface({
     input: process.stdin,
     output: process.stdout
   });
+let currentKey;
 
 const port = 3000;
 const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -41,6 +43,10 @@ function clientConnect(ip, port){
       });
 }
 
+async function getCurrentKey(){
+
+}
+
 function start(){
     //encryption check
     console.log(CryptoJS.AES.encrypt("Hello", "Monday left me broken").toString());
@@ -66,6 +72,21 @@ function start(){
 
     server.listen(port);
 
+    //connect to keygen server
+    client.connect(5555, 'localhost', () => {
+      console.log('Connected to server.');
+    
+      client.on('data', (data) => {
+        const receivedData = data.toString().trim();
+        currentKey = receivedData;
+        console.log(`Received data: ${receivedData}`);
+      });
+    
+      client.on('close', () => {
+        console.log('Connection closed.');
+      });
+    });
+
     //Get client info
     console.log("Finished starting server");
     let isData;
@@ -85,7 +106,7 @@ function start(){
             console.log("Generating your identifier");
             tempData['name'] = name;
         });
-        tempData['identifier'] = Crypto.AES.encrypt()
+        //tempData['identifier'] = CryptoJS.AES.encrypt()
     }
 }
 
