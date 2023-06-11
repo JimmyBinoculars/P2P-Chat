@@ -9,15 +9,21 @@ function generateRandomString(lengthInBits) {
   const randomString = randomBytes.toString('hex');
   return randomString;
 }
+
+function sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
 //string check
 const randomString = generateRandomString(256);
 console.log(randomString);
+
+const clients = [];
 
 const server = net.createServer((socket) => {
     console.log('Client connected.');
   
     // Add the socket to the list of connected sockets
-    const clients = [];
     clients.push(socket);
   
     // Handle incoming data from the client
@@ -40,19 +46,21 @@ const server = net.createServer((socket) => {
 server.listen(port);
 
 async function mainLoop(){
-    while (true()){
+    while (true){
         currentKey = generateRandomString(256);
         console.log(`Current key is ${currentKey}`)
         await sleep(1800000);
     }
 }
 async function sendData(){
-    while (true()){
+    while (true){
         clients.forEach((client) => {
             client.write(currentKey);
         });
+        console.log(`sending data`);
+        await sleep(500);
     }
 }
 
 mainLoop();
-sendData()
+sendData();
