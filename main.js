@@ -1,12 +1,16 @@
 const net = require('node:net');
 const fs = require('node:fs');
 const path = require('node:path');
+const readlineSync = require('readline-sync');
 var CryptoJS = require("crypto-js");
 const client = new net.Socket();
-const readline = require('readline').createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+let identifierBase, key;
 let currentKey;
 
 const port = 3000;
@@ -22,13 +26,17 @@ function generateRandomString() {
     return result;
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 //Connect to other client
-function clientConnect(ip, port){
-    const client = net.createConnection({ host, port }, () => {
+function clientConnect(ip, port, identifier){
+  const client = net.createConnection({ host, port }, () => {
         console.log('Connected to server.');
       
         // Send a message to the server
-        client.write('Hello server!');
+        client.write(CryptoJS.AES.encrypt(`[Data] ${JSON.stringify()}`, key).toString);
       });
       
       // Handle incoming data from the server
@@ -90,14 +98,14 @@ function start(){
     //Get client info
     let isData;
     try {
-        let {identifierBase} = require('./config.json');
+        let {identifierBase} = require('./data.json');
     } catch {
         isData = false;
     }
 
     let tempData = {};
     if(isData){
-        let {identifierBase, key} = require('./config.json');
+        identifierBase, key = require('./data.json');
     }else {
       tempData['identifierBase'] = generateRandomString();
       tempData['key'] = generateRandomString();
@@ -108,7 +116,24 @@ function start(){
         } else {
             console.log('Successfully wrote file')
         }
-      })
+      });
+      fs.readFile("./data.json", "utf8", (err, jsonString) => {
+        if (err) {
+          console.log("File read failed:", err);
+          return;
+        }
+        console.log("File data:", jsonString);
+      });
+    }
+    console.log(`idetifierBase: ${identifierBase}, key: ${key}`)
+    //Main loop
+    while (true) {
+      //const curentInput = readlineSync.question("anonymous@localhost()-$");
+      let curentInput;
+      sleep(1000);
+      if(curentInput == "EXIT()"){
+        break;
+      }
     }
 }
 
