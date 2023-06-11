@@ -82,10 +82,10 @@ function start(){
         readline.question('Whats your name? (optional)', name => {
             console.log(`Hey there ${name}!`);
             readline.close();
+            console.log("Generating your identifier");
             tempData['name'] = name;
-          });
-        console.log("Generating your identifier");
-
+        });
+        tempData['identifier'] = Crypto.AES.encrypt()
     }
 }
 
