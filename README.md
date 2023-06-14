@@ -6,4 +6,6 @@ for generating keys for encrypting identifiers.
 ## Contributing
 Please contribute to this project.
 ## Setup
-So far there is no setup required but in future I will add some documentation.
+So far there is no setup required but in future I will add some documentation
+
+BTW progress has slowed on this project 
