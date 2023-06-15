@@ -10,10 +10,11 @@ const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout
 });
-let identifierBase, key;
-let currentKey;
 
 function main() {
+    //encryption check
+    console.log(CryptoJS.AES.encrypt("Hello", "Monday left me broken").toString());
+
     //connect to keygen server
     client.connect(5555, 'localhost', () => {
         console.log('Connected to server.');
