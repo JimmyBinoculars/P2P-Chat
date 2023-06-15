@@ -5,6 +5,8 @@ const readlineSync = require('readline-sync');
 var CryptoJS = require("crypto-js");
 const client = new net.Socket();
 const readline = require('readline');
+const { json } = require('stream/consumers');
+let data;
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -46,9 +48,19 @@ function main() {
     const jsonString = JSON.stringify(tempData);
     fs.writeFile('./data.json', jsonString, err => {
         if (err) {
-            console.log('Error writing file', err)
+            console.log('Error writing file', err);
         } else {
-            console.log('Successfully wrote file')
+            console.log('Successfully wrote file');
+        }
+    });
+    fs.readFile('./data.json', (err, jsonString) => {
+        if (err) {
+            console.log(`Error reading the written file`);
+            return;
+        } else {
+            data = jsonString;
+            console.log(`Successfully read file`);
+            console.log(`Data read: ${jsonString}`);
         }
     });
 }
