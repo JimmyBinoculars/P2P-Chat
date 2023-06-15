@@ -11,6 +11,16 @@ const rl = readline.createInterface({
     output: process.stdout
 });
 
+function generateRandomString() {
+    const characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    let result = '';
+    for (let i = 0; i < 32; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+    }
+    return result;
+}
+
 function main() {
     //encryption check
     console.log(CryptoJS.AES.encrypt("Hello", "Monday left me broken").toString());
@@ -28,6 +38,18 @@ function main() {
         client.on('close', () => {
             console.log('Connection closed.');
         });
+    });
+
+    let tempData = {'identifierBase':null, 'key':null};
+    tempData['identifierBase'] = generateRandomString();
+    tempData['key'] = generateRandomString();
+    const jsonString = JSON.stringify(tempData);
+    fs.writeFile('./data.json', jsonString, err => {
+        if (err) {
+            console.log('Error writing file', err)
+        } else {
+            console.log('Successfully wrote file')
+        }
     });
 }
 
