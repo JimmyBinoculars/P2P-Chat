@@ -60,7 +60,8 @@ function main() {
         } else {
             data = jsonString;
             console.log(`Successfully read file`);
-            console.log(`Data read: ${jsonString}`);
+            console.log(`Data read: ${data}`);
+            //console.log(`Your key is: ${JSON.stringify(data.key)}`)
         }
     });
 }
