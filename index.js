@@ -58,9 +58,10 @@ function main() {
             console.log(`Error reading the written file`);
             return;
         } else {
-            data = jsonString;
+            data = JSON.parse(jsonString);
             console.log(`Successfully read file`);
-            console.log(`Data read: ${jsonString}`);
+            console.log(`Data read: ${JSON.stringify(data)}`);
+            console.log(`Your key is: ${data["key"]}`)
         }
     });
 }
