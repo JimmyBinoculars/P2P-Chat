@@ -4,4 +4,4 @@ The clients will share ips for the first time then message each other both clien
 Using a key that needs to be shared to the other client they can send encrypted messages to each other. The only server part is
 for generating keys for encrypting identifiers.
 ## Contribute to the project
-Feel free to fork this to fix any bugs or problems.
+Feel free to fork this to fix any bugs or problems. I need contributors
