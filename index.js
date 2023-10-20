@@ -1,11 +1,10 @@
-const net = require('node:net');
-const fs = require('node:fs');
-const path = require('node:path');
+const net = require('net');
+const fs = require('fs');
+const path = require('path');
 const readlineSync = require('readline-sync');
 var CryptoJS = require("crypto-js");
 const client = new net.Socket();
 const readline = require('readline');
-const { json } = require('stream/consumers');
 let data;
 
 const rl = readline.createInterface({
